@@ -1,0 +1,37 @@
+// THIS FILE WILL BE OVERWRITTEN BY DEV-C++!
+// DO NOT EDIT!
+
+#include <windows.h> // include for version info constants
+
+#include "resource.rc"
+#include "dlgMain.rc"
+#include "dlgAbout.rc"
+
+//
+// TO CHANGE VERSION INFORMATION, EDIT PROJECT OPTIONS...
+//
+1 VERSIONINFO
+FILEVERSION 2,99,4,0
+PRODUCTVERSION 2,99,4,0
+FILETYPE VFT_APP
+{
+  BLOCK "StringFileInfo"
+	 {
+		 BLOCK "041504E4"
+		 {
+			 VALUE "CompanyName", "Piotr Borys"
+			 VALUE "FileVersion", "2.99.4"
+			 VALUE "FileDescription", "iTime"
+			 VALUE "InternalName", "iTime"
+			 VALUE "LegalCopyright", "Piotr Borys"
+			 VALUE "LegalTrademarks", ""
+			 VALUE "OriginalFilename", ""
+			 VALUE "ProductName", "iTime"
+			 VALUE "ProductVersion", "2.99"
+		 }
+	 }
+  BLOCK "VarFileInfo"
+	 {
+		 VALUE "Translation", 0x0415, 1252
+	 }
+}

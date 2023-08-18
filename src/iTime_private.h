@@ -1,0 +1,23 @@
+// THIS FILE WILL BE OVERWRITTEN BY DEV-C++!
+// DO NOT EDIT!
+
+#ifndef ITIME_PRIVATE_H
+#define ITIME_PRIVATE_H
+
+// VERSION DEFINITIONS
+#define VER_STRING	"2.99.4.0"
+#define VER_MAJOR	2
+#define VER_MINOR	99
+#define VER_RELEASE	4
+#define VER_BUILD	0
+#define COMPANY_NAME	"Piotr Borys"
+#define FILE_VERSION	"2.99.4"
+#define FILE_DESCRIPTION	"iTime"
+#define INTERNAL_NAME	"iTime"
+#define LEGAL_COPYRIGHT	"Piotr Borys"
+#define LEGAL_TRADEMARKS	""
+#define ORIGINAL_FILENAME	""
+#define PRODUCT_NAME	"iTime"
+#define PRODUCT_VERSION	"2.99"
+
+#endif //ITIME_PRIVATE_H

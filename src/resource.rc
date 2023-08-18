@@ -1,0 +1,17 @@
+#include "resource.h"
+#include "dlgMain.rc"
+#include "dlgAbout.rc"
+
+IDI_MAINICON ICON "satelitte.ico"
+
+IDM_TRAYMENU MENU
+{
+    POPUP "&Program"
+    {
+        MENUITEM "Pobierz &czas", IDM_MAINDLG
+        MENUITEM "&O programie...", IDM_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "&Zamknij program\tF12", IDM_EXIT
+    }
+}
+
