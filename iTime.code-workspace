@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"dotnet.defaultSolution": "iTime.sln"
+	},
+	"launch": {
+		"version": "0.2.0",
+		"configurations": []
+	}
+}
