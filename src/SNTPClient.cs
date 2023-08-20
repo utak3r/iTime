@@ -326,6 +326,10 @@ public class SNTPClient
         }
     }
 
+    // This is the most important data for user.
+    // It calculates the difference between local system clock and reference clock.
+    // Using this shift it's easy to properly adjust local clock.
+    // See above comment for RoundTripDelay.
     public TimeSpan LocalClockOffset
     {
         get
@@ -415,7 +419,7 @@ public class SNTPClient
         TransmitTimestamp = GetCurrentTime();
     }
 
-    public void Connect(string Host, int TimeOut)
+    public void GetSNTPDataFromServer(string Host, int TimeOut)
     {
         try
         {

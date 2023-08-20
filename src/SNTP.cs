@@ -52,6 +52,7 @@ public class SNTP : Form
         this.btnSetTime.Size = new System.Drawing.Size(116,23);
         this.btnSetTime.TabIndex = 1;
         this.btnSetTime.Click += (sender, e) => { FixSystemTime(); };
+        this.btnSetTime.Enabled = false;
         //
         this.lblDateTimeLabel.AutoSize =  true;
         this.lblDateTimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -115,8 +116,16 @@ public class SNTP : Form
         SetDateTimeLabels(localDateTime);
 
         sntpClient = new SNTPClient();
-        sntpClient.Connect(Settings.NTPServerName, 5000);
-        sntpToLocalShift = sntpClient.LocalClockOffset;
+        try
+        {
+            sntpClient.GetSNTPDataFromServer(Settings.NTPServerName, 5000);
+            sntpToLocalShift = sntpClient.LocalClockOffset;
+            if (this.btnSetTime != null) this.btnSetTime.Enabled = true;
+        }
+        catch (Exception ex)
+        {
+            //
+        }
 
         SetDateTimeLabels(sntpClient.ReceiveTimestamp);
         SetShiftLabel(sntpToLocalShift);
@@ -152,6 +161,8 @@ public class SNTP : Form
         st.wSecond = Convert.ToInt16(correctedTime.Second);
         st.wMilliseconds = Convert.ToInt16(correctedTime.Millisecond);
         SetLocalTime(ref st);
+
+        if (this.btnSetTime != null) this.btnSetTime.Enabled = false;
     }
 
 
