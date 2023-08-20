@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  
+  <Package
+        Manufacturer="Piotr Borys"
+        Name="iTime"
+        Version="3.0.1.0"
+        Language="1033"
+        Compressed="yes"
+        Scope="perMachine">
+  
+    <MediaTemplate EmbedCab="yes" />
+
+    <StandardDirectory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="iTime">
+            <Component Id="iTimeMainComponent" Guid="6D42BE15-369A-4CB3-9C86-AC4397D4B8A7">
+                <File KeyPath="yes" Source="bin\Release\net7.0-windows\publish\iTime.exe"></File>
+                <File KeyPath="no" Source="bin\Release\net7.0-windows\publish\iTime.dll"></File>
+                <File KeyPath="no" Source="bin\Release\net7.0-windows\publish\iTime_icon.ico"></File>
+                <File KeyPath="no" Source="bin\Release\net7.0-windows\publish\iTime.deps.json"></File>
+                <File KeyPath="no" Source="bin\Release\net7.0-windows\publish\iTime.runtimeconfig.json"></File>
+            </Component>
+        </Directory>
+    </StandardDirectory>
+
+    <Feature Id="iTimeFeature">
+      <ComponentRef Id="iTimeMainComponent" />
+    </Feature>
+
+  </Package>
+</Wix>
