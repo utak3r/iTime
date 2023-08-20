@@ -38,7 +38,8 @@ public class SNTP : Form
         this.MinimizeBox =  false;
         this.Size = new System.Drawing.Size(436,180);
         this.Text =  "Pobieranie czasu z serwera NTP";
-        this.Icon = new Icon("satelitte.ico");
+        this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+        this.Icon = new Icon(Settings.IconFilename);
         //
         this.btnClose.Text =  "Zamknij okno";
         this.btnClose.Location = new System.Drawing.Point(276,24);
@@ -114,7 +115,7 @@ public class SNTP : Form
         SetDateTimeLabels(localDateTime);
 
         sntpClient = new SNTPClient();
-        sntpClient.Connect("ntp0.fau.de", 5000);
+        sntpClient.Connect(Settings.NTPServerName, 5000);
         sntpToLocalShift = sntpClient.LocalClockOffset;
 
         SetDateTimeLabels(sntpClient.ReceiveTimestamp);

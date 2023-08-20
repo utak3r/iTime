@@ -2,18 +2,21 @@ using System.Windows.Forms;
 
 namespace iTime;
 
+public class Settings
+{
+    public static String AppName = "iTime";
+    public static String AppVersion = "3.0.1";
+    public static String Copyright = "(c) 2001 - 2023 Piotr Borys";
+    public static String IconFilename = "iTime_icon.ico";
+    public static String NTPServerName = "ntp0.fau.de";
+}
+
 class Program
 {
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
     [STAThread]
     static void Main()
     {
-        // To customize application configuration such as set high DPI settings or default font,
-        // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        //Application.Run(new Form1());
         SetupNotifyIcon();
         Application.Run();
     }
@@ -21,7 +24,7 @@ class Program
     static void SetupNotifyIcon()
     {
         NotifyIcon notifyIcon = new NotifyIcon();
-        notifyIcon.Icon = new Icon("satelitte.ico");
+        notifyIcon.Icon = new Icon(Settings.IconFilename);
         ContextMenuStrip notifyContextMenu = new ContextMenuStrip();
 
         // Exit
