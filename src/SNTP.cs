@@ -115,7 +115,7 @@ public class SNTP : Form
 
         sntpClient = new SNTPClient();
         sntpClient.Connect("ntp0.fau.de", 5000);
-        sntpToLocalShift = sntpClient.ReceiveTimestamp - localDateTime;
+        sntpToLocalShift = sntpClient.LocalClockOffset;
 
         SetDateTimeLabels(sntpClient.ReceiveTimestamp);
         SetShiftLabel(sntpToLocalShift);

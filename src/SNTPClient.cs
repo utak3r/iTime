@@ -1,3 +1,46 @@
+/*
+    Simple Network Time Protocol (SNTP) Version 4 for IPv4, IPv6 and OSI
+    https://datatracker.ietf.org/doc/html/rfc4330
+*/
+/*
+      NTP Packet Header
+                           1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9  0  1
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |LI | VN  |Mode |    Stratum    |     Poll      |   Precision    |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                          Root  Delay                           |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                       Root  Dispersion                         |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                     Reference Identifier                       |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                                                                |
+      |                    Reference Timestamp (64)                    |
+      |                                                                |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                                                                |
+      |                    Originate Timestamp (64)                    |
+      |                                                                |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                                                                |
+      |                     Receive Timestamp (64)                     |
+      |                                                                |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                                                                |
+      |                     Transmit Timestamp (64)                    |
+      |                                                                |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                 Key Identifier (optional) (32)                 |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                                                                |
+      |                                                                |
+      |                 Message Digest (optional) (128)                |
+      |                                                                |
+      |                                                                |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+*/
+
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -34,14 +77,14 @@ public class SNTPClient
 
     public enum SNTPStratum
     {
-        Unspecified,			// 0 - unspecified or unavailable
+        Unspecified,			// 0 - kiss-o'-death message
         PrimaryReference,		// 1 - primary reference (e.g. radio-clock)
         SecondaryReference,		// 2-15 - secondary reference (via NTP or SNTP)
         Reserved				// 16-255 - reserved
     }
 
-    /// Warns of an impending leap second to be inserted/deleted in the last
-    /// minute of the current day. (See the SNTPLeapIndicator enum)
+    // Warns of an impending leap second to be inserted/deleted in the last
+    // minute of the current day. (See the SNTPLeapIndicator enum)
     public SNTPLeapIndicator LeapIndicator
     {
         get
@@ -60,7 +103,7 @@ public class SNTPClient
         }
     }
 
-    /// Version number of the protocol (3 or 4).
+    // Version number of the protocol (3 or 4).
     public byte VersionNumber
     {
         get
@@ -71,7 +114,7 @@ public class SNTPClient
         }
     }
 
-    /// Returns mode. (See the SNTPMode enum)
+    // Returns mode. (See the SNTPMode enum)
     public SNTPMode Mode
     {
         get
@@ -99,7 +142,7 @@ public class SNTPClient
         }
     }
 
-    /// Stratum of the clock. (See the SNTPStratum enum)
+    // Stratum of the clock. (See the SNTPStratum enum)
     public SNTPStratum Stratum
     {
         get
@@ -115,27 +158,25 @@ public class SNTPClient
         }
     }
 
-    /// Maximum interval (seconds) between successive messages
+    // Maximum interval (seconds) between successive messages
     public uint PollInterval
     {
         get
         {
-            // Thanks to Jim Hollenhorst <hollenho@attbi.com>
             return (uint)(Math.Pow(2, (sbyte)SNTPData[2]));
         }
     }
 
-    /// Precision (in seconds) of the clock
+    // Precision (in seconds) of the clock
     public double Precision
     {
         get
         {
-            // Thanks to Jim Hollenhorst <hollenho@attbi.com>
             return (Math.Pow(2, (sbyte)SNTPData[3]));
         }
     }
 
-    /// Round trip time (in milliseconds) to the primary reference source.
+    // Round trip time (in milliseconds) to the primary reference source.
     public double RootDelay
     {
         get
@@ -146,7 +187,7 @@ public class SNTPClient
         }
     }
 
-    /// Nominal error (in milliseconds) relative to the primary reference source.
+    // Nominal error (in milliseconds) relative to the primary reference source.
     public double RootDispersion
     {
         get
@@ -157,7 +198,7 @@ public class SNTPClient
         }
     }
 
-    /// Reference identifier (either a 4 character string or an IP address)
+    // Reference identifier (either a 4 character string or an IP address)
     public string ReferenceID
     {
         get
@@ -208,7 +249,8 @@ public class SNTPClient
         }
     }
 
-    /// The time at which the clock was last set or corrected
+
+    // The time at which the clock was last set or corrected
     public DateTime ReferenceTimestamp
     {
         get
@@ -220,7 +262,7 @@ public class SNTPClient
         }
     }
 
-    /// The time (T1) at which the request departed the client for the server
+    // T1 - time request sent by client
     public DateTime OriginateTimestamp
     {
         get
@@ -229,7 +271,7 @@ public class SNTPClient
         }
     }
 
-    /// The time (T2) at which the request arrived at the server
+    // T2 - time request received by server
     public DateTime ReceiveTimestamp
     {
         get
@@ -241,7 +283,7 @@ public class SNTPClient
         }
     }
 
-    /// The time (T3) at which the reply departed the server for client
+    // T3 - time reply sent by server
     public DateTime TransmitTimestamp
     {
         get
@@ -257,10 +299,24 @@ public class SNTPClient
         }
     }
 
-    /// Destination Timestamp (T4)
-    public DateTime DestinationTimestamp;
+    // T4 - time reply received by client
+    public DateTime DestinationTimestamp = DateTime.Now;
 
-    /// The time (in milliseconds) between the departure of request and arrival of reply 
+
+    /*
+    To calculate the roundtrip delay d and system clock offset t relative
+    to the server, the client sets the Transmit Timestamp field in the
+    request to the time of day according to the client clock in NTP
+    timestamp format.  For this purpose, the clock need not be
+    synchronized.  The server copies this field to the Originate
+    Timestamp in the reply and sets the Receive Timestamp and Transmit
+    Timestamp fields to the time of day according to the server clock in
+    NTP timestamp format.
+    */
+    /*
+    The roundtrip delay d and system clock offset t are defined as:
+    d = (T4 - T1) - (T3 - T2)     t = ((T2 - T1) + (T3 - T4)) / 2.
+    */
     public double RoundTripDelay
     {
         get
@@ -270,17 +326,17 @@ public class SNTPClient
         }
     }
 
-    /// The offset (in milliseconds) of the local clock relative to the primary reference source
-    public double LocalClockOffset
+    public TimeSpan LocalClockOffset
     {
         get
         {
-            TimeSpan span = (ReceiveTimestamp - OriginateTimestamp) + (TransmitTimestamp - DestinationTimestamp);
-            return (span.TotalMilliseconds / 2);
+            // t = ((T2 - T1) + (T3 - T4)) / 2
+            TimeSpan offset = ((ReceiveTimestamp - OriginateTimestamp) + (TransmitTimestamp - DestinationTimestamp)) / 2;
+            return offset;
         }
     }
 
-    /// Compute date, given the number of milliseconds since January 1, 1900
+    // Compute date, given the number of milliseconds since January 1, 1900
     private DateTime ComputeDate(ulong milliseconds)
     {
         TimeSpan span = TimeSpan.FromMilliseconds((double)milliseconds);
@@ -289,7 +345,7 @@ public class SNTPClient
         return time;
     }
 
-    /// Compute the number of milliseconds, given the offset of a 8-byte array
+    // Compute the number of milliseconds, given the offset of a 8-byte array
     private ulong GetMilliSeconds(byte offset)
     {
         ulong intpart = 0, fractpart = 0;
@@ -306,9 +362,9 @@ public class SNTPClient
         return milliseconds;
     }
 
-    /// Set the date part of the SNTP data
-    /// <param name="offset">Offset at which the date part of the SNTP data is</param>
-    /// <param name="date">The date</param>
+    // Set the date part of the SNTP data
+    // <param name="offset">Offset at which the date part of the SNTP data is</param>
+    // <param name="date">The date</param>
     private void SetDate(byte offset, DateTime date)
     {
         ulong intpart = 0, fractpart = 0;
@@ -333,7 +389,7 @@ public class SNTPClient
         }
     }
 
-    /// Returns true if received data is valid and if comes from a NTP-compliant time server.
+    // Returns true if received data is valid and if comes from a NTP-compliant time server.
     private bool IsResponseValid()
     {
         if (SNTPData.Length < SNTPDataLength || Mode != SNTPMode.Server)
