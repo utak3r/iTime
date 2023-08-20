@@ -38,6 +38,17 @@
                 "${workspaceFolder}/iTime.sln"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Build WiX installer",
+            "type": "process",
+            "command": "wix",
+            "args": [
+                "build",
+                "-arch", "x64",
+                "-o", "install/iTime-3.0.1.msi",
+                "iTime.wxs"
+            ]
         }
     ]
 }
