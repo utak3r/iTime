@@ -10,7 +10,7 @@
     <PublishSingleFile>false</PublishSingleFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(RuntimeIdentifier)' == 'win-x64'">
+  <ItemGroup>
     <None Update="satelitte.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

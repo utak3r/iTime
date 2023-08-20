@@ -122,7 +122,8 @@ public class SNTP : Form
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public struct SYSTEMTIME {
+    public struct SYSTEMTIME 
+    {
         public short wYear;
         public short wMonth;
         public short wDayOfWeek;

@@ -2,54 +2,17 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build debug",
+            "label": "build",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
+                "-c", "Debug",
                 "${workspaceFolder}/iTime.sln",
-                "-c",
-                "Debug",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
-        },
-        {
-            "label": "build release",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "build",
-                "${workspaceFolder}/iTime.sln",
-                "-c",
-                "Release",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile",
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            }
-        },
-        {
-            "label": "Run",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "run",
-                "--project", "${workspaceFolder}/iTime.sln",
-                "-c",
-                "Debug"
-            ],
-            "problemMatcher": [
-                "$msCompile"
-            ]
+            "problemMatcher": "$msCompile"
         },
         {
             "label": "publish",
@@ -59,7 +22,6 @@
                 "publish",
                 "${workspaceFolder}/iTime.sln",
                 "-c", "Release",
-                "-r", "win-x64",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -78,5 +40,4 @@
             "problemMatcher": "$msCompile"
         }
     ]
-
 }
