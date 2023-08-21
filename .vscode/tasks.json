@@ -15,6 +15,16 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "test",
+            "type": "process",
+            "command": "dotnet",
+            "args": [
+                "test"
+            ],
+            "problemMatcher":"$msCompile",
+            "group": "test"
+        },
+        {
             "label": "publish",
             "command": "dotnet",
             "type": "process",
